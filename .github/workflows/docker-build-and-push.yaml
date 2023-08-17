@@ -17,6 +17,11 @@ on:
       DOCKERFILE_NAME:
         required: true
         type: string
+        default: 'Dockerfile'
+      DOCKER_CONTEXT:
+        required: false
+        type: string
+        default: '.'
       CONCURRENCY_GROUP:
         required: false
         type: string
@@ -61,7 +66,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ${{ inputs.DOCKER_CONTEXT }}
           file: ${{ inputs.DOCKERFILE_NAME }}
           push: true
           tags: |
