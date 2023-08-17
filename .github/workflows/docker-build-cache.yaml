@@ -54,8 +54,7 @@ jobs:
           file: ${{ inputs.DOCKERFILE_NAME }}
           push: false
           tags: |
-            ${{ inputs.DOCKER_REGISTRY_HOST }}/${{ inputs.DOCKER_IMAGE_PATH }}/${{ inputs.DOCKER_IMAGE_NAME }}:latest
-            ${{ inputs.DOCKER_REGISTRY_HOST }}/${{ inputs.DOCKER_IMAGE_PATH }}/${{ inputs.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            ${{ inputs.DOCKER_REGISTRY_HOST }}/${{ inputs.DOCKER_IMAGE_PATH }}/${{ inputs.DOCKER_IMAGE_NAME }}:cache-${{ env.IMAGE_TAG }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: BUILD_ENV=${{ env.BUILD_ENV }}
