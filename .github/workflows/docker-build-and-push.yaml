@@ -45,15 +45,16 @@ jobs:
       - name: Get the tag name
         id: get_tag_name
         run: |
-          echo "CACHE_TO=type=gha,mode=max" >> $GITHUB_ENV
           if [[ '${{inputs.DOCKER_BUILD_ENV}}' != '' ]]; then
             short_sha=$(echo $GITHUB_SHA | head -c 7)
             echo "BUILD_ENV=${{inputs.DOCKER_BUILD_ENV}}" >> $GITHUB_ENV
             echo "IMAGE_TAG=${GITHUB_REF_NAME}-${short_sha}" >> $GITHUB_ENV
+            echo "CACHE_TO=type=gha,mode=max" >> $GITHUB_ENV
           elif [[ $GITHUB_REF_TYPE == 'branch' ]]; then
             short_sha=$(echo $GITHUB_SHA | head -c 7)
             echo "IMAGE_TAG=${GITHUB_REF_NAME}-${short_sha}" >> $GITHUB_ENV
             echo "BUILD_ENV=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+            echo "CACHE_TO=type=gha,mode=max" >> $GITHUB_ENV
           else
             echo "IMAGE_TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
             echo "BUILD_ENV=production" >> $GITHUB_ENV
