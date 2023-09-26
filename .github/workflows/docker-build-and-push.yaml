@@ -30,13 +30,17 @@ on:
         required: false
         type: string
         default: 'docker_build_and_push'
+      RUNNER_TAG:
+        required: false
+        type: string
+        default: 'ubuntu-latest'
     secrets:
       GCLOUD_DEV_SERVICE_ACCOUNT_JSON:
         required: true
 
 jobs:
   build-and-push-to-gcr:
-    runs-on: ubuntu-latest
+    runs-on: ${{inputs.RUNNER_TAG}}
     concurrency:
       group: ${{inputs.CONCURRENCY_GROUP}}
       cancel-in-progress: false
