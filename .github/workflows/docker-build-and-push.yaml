@@ -45,6 +45,7 @@ jobs:
       - name: Get the tag name
         id: get_tag_name
         run: |
+          echo "CACHE_TO=type=gha,mode=max" >> $GITHUB_ENV
           if [[ '${{inputs.DOCKER_BUILD_ENV}}' != '' ]]; then
             short_sha=$(echo $GITHUB_SHA | head -c 7)
             echo "BUILD_ENV=${{inputs.DOCKER_BUILD_ENV}}" >> $GITHUB_ENV
@@ -56,6 +57,7 @@ jobs:
           else
             echo "IMAGE_TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
             echo "BUILD_ENV=production" >> $GITHUB_ENV
+            echo "CACHE_TO=" >> $GITHUB_ENV
           fi
 
       - name: Setup google auth
@@ -81,5 +83,5 @@ jobs:
             ${{ inputs.DOCKER_REGISTRY_HOST }}/${{ inputs.DOCKER_IMAGE_PATH }}/${{ inputs.DOCKER_IMAGE_NAME }}:latest
             ${{ inputs.DOCKER_REGISTRY_HOST }}/${{ inputs.DOCKER_IMAGE_PATH }}/${{ inputs.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-to: ${{ env.CACHE_TO }}
           build-args: BUILD_ENV=${{ env.BUILD_ENV }}
