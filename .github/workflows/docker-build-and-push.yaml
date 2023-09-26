@@ -53,7 +53,7 @@ jobs:
             short_sha=$(echo $GITHUB_SHA | head -c 7)
             echo "BUILD_ENV=${{inputs.DOCKER_BUILD_ENV}}" >> $GITHUB_ENV
             echo "IMAGE_TAG=${GITHUB_REF_NAME}-${short_sha}" >> $GITHUB_ENV
-            echo "CACHE_TO=type=gha,mode=max" >> $GITHUB_ENV
+            echo "CACHE_TO=" >> $GITHUB_ENV
           elif [[ $GITHUB_REF_TYPE == 'branch' ]]; then
             short_sha=$(echo $GITHUB_SHA | head -c 7)
             echo "IMAGE_TAG=${GITHUB_REF_NAME}-${short_sha}" >> $GITHUB_ENV
