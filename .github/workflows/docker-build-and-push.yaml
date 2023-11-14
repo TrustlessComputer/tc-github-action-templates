@@ -78,12 +78,20 @@ jobs:
         run: |
           gcloud auth configure-docker --quiet gcr.io
 
+      -
+        name: Docker meta
+        uses: docker/metadata-action@v5
+        id: dockerMeta
+        with:
+          images: ${{ inputs.DOCKER_IMAGE_PATH }}/${{ inputs.DOCKER_IMAGE_NAME }}
+
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: ${{ inputs.DOCKER_CONTEXT }}
           file: ${{ inputs.DOCKERFILE_NAME }}
           push: true
+          labels: ${{ steps.dockerMeta.outputs.labels }}
           tags: |
             ${{ inputs.DOCKER_REGISTRY_HOST }}/${{ inputs.DOCKER_IMAGE_PATH }}/${{ inputs.DOCKER_IMAGE_NAME }}:latest
             ${{ inputs.DOCKER_REGISTRY_HOST }}/${{ inputs.DOCKER_IMAGE_PATH }}/${{ inputs.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
