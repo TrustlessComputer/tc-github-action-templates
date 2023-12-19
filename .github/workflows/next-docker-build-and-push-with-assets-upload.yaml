@@ -128,4 +128,4 @@ jobs:
         uses: 'google-github-actions/upload-cloud-storage@v2'
         with:
           path: './.next'
-          destination: '${{ inputs.NEXT_UPLOAD_STATIC_ASSETS_DESTINATION }}/'
+          destination: '${{ inputs.NEXT_UPLOAD_STATIC_ASSETS_DESTINATION }}/${{ env.IMAGE_TAG }}/'
