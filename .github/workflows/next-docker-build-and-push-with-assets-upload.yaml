@@ -118,20 +118,21 @@ jobs:
 
       - name: Copy assets from docker
         run: |
-          mkdir .next
+          mkdir _next
           tempContainer=$(docker create ${{ inputs.DOCKER_REGISTRY_HOST }}/${{ inputs.DOCKER_IMAGE_PATH }}/${{ inputs.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }})
-          docker cp $tempContainer:/app/.next/static ./.next/static
+          docker cp $tempContainer:/app/.next/static ./_next/static
           docker rm -v $tempContainer
-          ls -lra .next
+          ls -lra _next
 
       - name: Upload static assets
         id: 'upload-static-assets'
         uses: 'google-github-actions/upload-cloud-storage@v2'
         with:
-          path: './.next'
+          path: './_next'
           destination: '${{ inputs.NEXT_UPLOAD_STATIC_ASSETS_DESTINATION }}/${{ env.IMAGE_TAG }}/'
 
       - name: Push docker image to registry
+        if: ${{ inputs.DOCKER_AUTOPUSH }}
         run: |
           docker push ${{ inputs.DOCKER_REGISTRY_HOST }}/${{ inputs.DOCKER_IMAGE_PATH }}/${{ inputs.DOCKER_IMAGE_NAME }}:latest
           docker push ${{ inputs.DOCKER_REGISTRY_HOST }}/${{ inputs.DOCKER_IMAGE_PATH }}/${{ inputs.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
