@@ -26,6 +26,10 @@ on:
         required: false
         type: string
         default: ''
+      DOCKER_AUTOPUSH:
+        required: false
+        type: boolean
+        default: true
       CONCURRENCY_GROUP:
         required: false
         type: string
@@ -90,11 +94,13 @@ jobs:
         with:
           context: ${{ inputs.DOCKER_CONTEXT }}
           file: ${{ inputs.DOCKERFILE_NAME }}
-          push: true
+          push: ${{ inputs.DOCKER_AUTOPUSH }}
           labels: ${{ steps.dockerMeta.outputs.labels }}
           tags: |
             ${{ inputs.DOCKER_REGISTRY_HOST }}/${{ inputs.DOCKER_IMAGE_PATH }}/${{ inputs.DOCKER_IMAGE_NAME }}:latest
             ${{ inputs.DOCKER_REGISTRY_HOST }}/${{ inputs.DOCKER_IMAGE_PATH }}/${{ inputs.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           cache-from: type=gha
           cache-to: ${{ env.CACHE_TO }}
-          build-args: BUILD_ENV=${{ env.BUILD_ENV }}
+          build-args: |
+            BUILD_ENV=${{ env.BUILD_ENV }}
+            BUILD_TAG=${{ env.IMAGE_TAG }}
