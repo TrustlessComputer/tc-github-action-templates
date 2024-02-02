@@ -31,7 +31,7 @@ jobs:
       group: docker_build_cache_${{vars.GITHUB_REF_NAME}}
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Get the tag name
         id: get_tag_name
         run: |
@@ -40,10 +40,10 @@ jobs:
           echo "BUILD_ENV=production" >> $GITHUB_ENV
 
       - name: Setup docker
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Build and cache
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: ${{ inputs.DOCKER_CONTEXT }}
           file: ${{ inputs.DOCKERFILE_NAME }}
