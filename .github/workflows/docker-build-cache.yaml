@@ -54,4 +54,4 @@ jobs:
           cache-to: type=gha,mode=max
           build-args: |
             BUILD_ENV=${{ env.BUILD_ENV }}
-            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+            SECRET_DEPLOY_GITHUB_TOKEN=${{ secrets.SECRET_DEPLOY_GITHUB_TOKEN }}
