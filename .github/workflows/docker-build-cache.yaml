@@ -23,6 +23,11 @@ on:
         type: string
         default: '.'
 
+    secrets:
+      SECRET_DEPLOY_GITHUB_TOKEN:
+        required: false
+      SECRET_DEPLOY_GITHUB_USER:
+        required: false
 
 jobs:
   build-cache:
