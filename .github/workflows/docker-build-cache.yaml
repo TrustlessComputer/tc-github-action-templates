@@ -52,4 +52,6 @@ jobs:
             ${{ inputs.DOCKER_REGISTRY_HOST }}/${{ inputs.DOCKER_IMAGE_PATH }}/${{ inputs.DOCKER_IMAGE_NAME }}:cache-${{ env.IMAGE_TAG }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: BUILD_ENV=${{ env.BUILD_ENV }}
+          build-args: |
+            BUILD_ENV=${{ env.BUILD_ENV }}
+            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
