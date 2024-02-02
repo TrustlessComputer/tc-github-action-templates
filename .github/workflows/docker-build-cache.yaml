@@ -55,3 +55,4 @@ jobs:
           build-args: |
             BUILD_ENV=${{ env.BUILD_ENV }}
             SECRET_DEPLOY_GITHUB_TOKEN=${{ secrets.SECRET_DEPLOY_GITHUB_TOKEN }}
+            SECRET_DEPLOY_GITHUB_USER=${{ secrets.SECRET_DEPLOY_GITHUB_USER }}
