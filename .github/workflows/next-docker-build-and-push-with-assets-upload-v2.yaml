@@ -131,8 +131,7 @@ jobs:
           docker cp $tempContainer:/app/.next/static ./${{ env.IMAGE_TAG }}/_next/static
           docker cp $tempContainer:/app/public ./${{ env.IMAGE_TAG }}/public
           docker rm -v $tempContainer
-          ls -lra _next
-          ls -lra public
+          ls -lra ${{ env.IMAGE_TAG }}
 
       - name: Upload static assets (public)
         id: 'upload-static-assets'
